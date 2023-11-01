@@ -1,0 +1,119 @@
+<!--counter-->
+
+<style>
+    .statistics-container {
+        display: flex;
+        justify-content: space-between;
+        
+        padding: 20px 40px;
+        background-color: #666af6;
+        border-radius: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat {
+        text-align: center;
+    }
+
+    .stat-number {
+        color: #ffffff;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    .stat-text {
+        color: #ffffff;
+        margin-top: 10px;
+        font-size: 1.2em;
+    }
+
+    @media (max-width: 768px) {
+        .statistics-container {
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .stat {
+            margin-bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .stat-number {
+            font-size: 1.5em;
+        }
+
+        .stat-text {
+            font-size: 1em;
+        }
+    }
+</style>
+<br>
+<center>
+    <div class="statistics-container">
+        <div class="stat">
+            <div class="stat-number">4</div>
+            <div class="stat-text">Continents</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">200+</div>
+            <div class="stat-text">Partners</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">10,000+</div>
+            <div class="stat-text">Customers</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">30,000+</div>
+            <div class="stat-text">Campaigns</div>
+        </div>
+    </div>
+</center>
+<br>
+
+<!-- Other parts of your code... -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                $('.stat-number').each(function() {
+                    var $this = $(this);
+                    var countTo = parseInt($this.text().replace(/[^0-9]/g, ''), 10); // Remove non-numeric characters and parse to integer
+
+                    $({ countNum: 0 }).animate({
+                        countNum: countTo
+                    }, {
+                        duration: 2000,
+                        easing: 'linear',
+                        step: function() {
+                            $this.text(Math.floor(this.countNum));
+                            if ($this.text().includes('+')) {
+                                $this.append('+');
+                            }
+                        },
+                        complete: function() {
+                            $this.text(this.countNum);
+                            if ($this.text().includes('200')) {
+                                $this.append('+');
+                            }
+                            if ($this.text().includes('10000')) {
+                                $this.append('+');
+                            }
+                            if ($this.text().includes('30000')) {
+                                $this.append('+');
+                            }
+                        }
+                    });
+                });
+                observer.disconnect(); // Ensure the animation runs only once
+            }
+        });
+
+        observer.observe(document.querySelector('.statistics-container'));
+    });
+</script>
+<!--counter-->
